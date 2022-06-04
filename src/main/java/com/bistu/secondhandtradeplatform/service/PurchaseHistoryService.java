@@ -7,7 +7,8 @@ import java.util.List;
 
 @Repository
 public interface PurchaseHistoryService {
-    String addHistory(PurchaseHistory purchaseHistory);
+    String addHistory(String userId, String sku);
     List<PurchaseHistory> getPurchaseHistoryByUserId(String userId);
     int deleteUserHistoryByUserId(String userId);
+    String setPurchaseStatus(String userId, String sku, int status);
 }

@@ -7,12 +7,12 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@TableName("purchaseHistory")
-public class PurchaseHistory {
+@TableName("user_trade_record")
+public class UserTradeRecord {
     @TableId
-    private String orderId;
+    private String tradeId;
     private String id;
-    private String sku;
-    private Date purchaseTime;
-    private int status;
+    private double moneyTrade;
+    private double pointTrade;
+    private Date time;
 }

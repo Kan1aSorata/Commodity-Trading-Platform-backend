@@ -29,6 +29,11 @@ public class CommodityController {
         return commodityService.deleteCommodityByName(name);
     }
 
+    @GetMapping("/getSku")
+    public String getSku(String name) {
+        return commodityService.getSku(name);
+    }
+
     /*
     sort:
         0:default

@@ -71,4 +71,10 @@ public class CommodityServiceImpl implements CommodityService {
         }
         return commodityList;
     }
+
+    @Override
+    public String getSku(String name) {
+        queryWrapper.eq("name", name);
+        return commodityMapper.selectOne(queryWrapper).getSku();
+    }
 }

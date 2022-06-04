@@ -8,6 +8,7 @@ import com.bistu.secondhandtradeplatform.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,8 +20,13 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
     QueryWrapper<PurchaseHistory> queryWrapper = new QueryWrapper<>();
 
     @Override
-    public String addHistory(PurchaseHistory purchaseHistory) {
+    public String addHistory(String userId, String sku) {
+        PurchaseHistory purchaseHistory = new PurchaseHistory();
         purchaseHistory.setOrderId(UUID.randomUUID().toString().replace("-", "").toLowerCase());
+        purchaseHistory.setId(userId);
+        purchaseHistory.setSku(sku);
+        purchaseHistory.setPurchaseTime(new Date());
+        purchaseHistory.setStatus(1);
         if (purchaseHistoryMapper.insert(purchaseHistory) != 0) {
             return purchaseHistory.getOrderId();
         } else return "Insert failure.";
@@ -39,5 +45,18 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
         if (i != 0) {
             return i;
         } else return 0;
+    }
+
+    @Override
+    public String setPurchaseStatus(String userId, String sku, int status) {
+        queryWrapper.eq("id", userId);
+        queryWrapper.eq("sku", sku);
+        PurchaseHistory purchaseHistory = purchaseHistoryMapper.selectOne(queryWrapper);
+        purchaseHistory.setStatus(status);
+        if (purchaseHistoryMapper.updateById(purchaseHistory) != 0) {
+            return "success.";
+        } else {
+            return "failure.";
+        }
     }
 }

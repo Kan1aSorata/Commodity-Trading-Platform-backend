@@ -2,6 +2,7 @@ package com.bistu.secondhandtradeplatform.controller;
 
 import com.bistu.secondhandtradeplatform.entity.PurchaseHistory;
 import com.bistu.secondhandtradeplatform.entity.User;
+import com.bistu.secondhandtradeplatform.entity.UserWallet;
 import com.bistu.secondhandtradeplatform.mapper.UserMapper;
 import com.bistu.secondhandtradeplatform.service.PurchaseHistoryService;
 import com.bistu.secondhandtradeplatform.service.UserService;
@@ -61,9 +62,27 @@ public class UserController {
         return userService.deleteUserById(userId);
     }
 
+    @GetMapping("/purchase")
+    public String purchase(String userId, String sku) {
+        return purchaseHistoryService.addHistory(userId, sku);
+    }
+
+    /*
+        status: 已发货 - 1，待收货 - 2，运输中 - 3，已收货 - 4，交易完成 - 0
+         */
+    @GetMapping("/setPurchaseStatus")
+    public String setPurchaseStatus(String userId, String sku, int status) {
+        return purchaseHistoryService.setPurchaseStatus(userId, sku, status);
+    }
+
     @GetMapping("/purchaseHistory")
     public List<PurchaseHistory> getPurchaseHistory(String userId) {
         return purchaseHistoryService.getPurchaseHistoryByUserId(userId);
+    }
+
+    @GetMapping("/queryBalance")
+    public UserWallet queryBalance(String userId) {
+        return userWalletService.queryBalance(userId);
     }
 
     @GetMapping("/rechargeBalance")
@@ -75,4 +94,11 @@ public class UserController {
     public String rechargePoint(String userId, Double point) {
         return userWalletService.rechargePoint(userId, point);
     }
+
+    @GetMapping("/payment")
+    public String payment(String userId, double money, double point) {
+        return userWalletService.consumeWallet(userId, money, point);
+    }
+
+
 }
