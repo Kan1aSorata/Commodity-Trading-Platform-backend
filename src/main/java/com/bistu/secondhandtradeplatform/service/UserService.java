@@ -9,4 +9,5 @@ public interface UserService {
     String register(User user);
     String login(String username, String password);
     String changeInfo(User user);
+    String deleteUserById(String userId);
 }

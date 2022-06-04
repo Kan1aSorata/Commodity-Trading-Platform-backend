@@ -2,6 +2,7 @@ package com.bistu.secondhandtradeplatform.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -15,5 +16,21 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         WebMvcConfigurer.super.addResourceHandlers(registry);
         registry.addResourceHandler("/pic/**").addResourceLocations("file:"+fileUploadPath);
         System.out.println("file:"+fileUploadPath);
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        WebMvcConfigurer.super.addCorsMappings(registry);
+        registry.addMapping("/**")
+                //设置允许跨域请求的域名
+                .allowedOriginPatterns("*")
+                // 设置允许请求方式
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD")
+                // 是否允许证书（cookies）
+                .allowCredentials(true)
+                // 预请求的结果能被缓存多久
+                .maxAge(3600)
+                // 设置允许的请求头
+                .allowedHeaders("*");
     }
 }

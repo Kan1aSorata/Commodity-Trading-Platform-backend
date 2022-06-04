@@ -43,6 +43,4 @@ public class CommodityController {
     public List<Commodity> searchCommodityByName(String name, int sort) {
         return commodityService.searchCommodityByName(name, sort);
     }
-
-
 }
