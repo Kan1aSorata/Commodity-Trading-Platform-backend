@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @TableName("adminTransition")
-public class AdminTransition {
+public class UserTransition {
     private String id;
     private String name;
     private String phone;

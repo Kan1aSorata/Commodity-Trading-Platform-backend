@@ -2,6 +2,7 @@ package com.bistu.secondhandtradeplatform.controller;
 
 import com.bistu.secondhandtradeplatform.entity.PurchaseHistory;
 import com.bistu.secondhandtradeplatform.entity.User;
+import com.bistu.secondhandtradeplatform.entity.UserTransition;
 import com.bistu.secondhandtradeplatform.entity.UserWallet;
 import com.bistu.secondhandtradeplatform.mapper.UserMapper;
 import com.bistu.secondhandtradeplatform.service.PurchaseHistoryService;
@@ -29,8 +30,8 @@ public class UserController {
     用户注册
      */
     @PostMapping("/register")
-    public String register(@RequestBody User user) {
-        return userService.register(user);
+    public String register(@RequestBody UserTransition userTransition) {
+        return userService.register(userTransition);
     }
 
     /*
@@ -47,6 +48,14 @@ public class UserController {
     @GetMapping("/list")
     public List<User> list() {
         return userMapper.selectList(null);
+    }
+
+    /*
+    用户信息获取
+     */
+    @GetMapping("/getUserInfo")
+    public User getUserInfo(String id) {
+        return userService.getUserInfo(id);
     }
 
     /*
