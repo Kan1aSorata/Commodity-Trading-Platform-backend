@@ -27,11 +27,13 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public String addCommodity(Commodity commodity) {
-        commodity.setSku(UUID.randomUUID().toString().replace("-", "").toLowerCase());
         if (commodityMapper.insert(commodity) != 0) {
-            return "success." +
-                    "sku:" + commodity.getSku();
+            return commodity.getSku();
         } else return "failure.";
+    }
+
+    public String getCommoditySku() {
+        return UUID.randomUUID().toString().replace("-", "").toLowerCase();
     }
 
     @Override

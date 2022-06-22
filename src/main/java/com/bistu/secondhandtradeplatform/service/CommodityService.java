@@ -14,4 +14,5 @@ public interface CommodityService {
     String deleteCommodityByName(String name);
     List<Commodity> searchCommodityByName(String name, int sort);
     String getSku(String name);
+    String getCommoditySku();
 }

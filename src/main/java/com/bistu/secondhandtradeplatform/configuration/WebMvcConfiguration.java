@@ -11,11 +11,16 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Value("${file.upload.path}")
     private String fileUploadPath;
 
+    @Value("${slide.upload.path}")
+    private String slideUploadPath;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         WebMvcConfigurer.super.addResourceHandlers(registry);
         registry.addResourceHandler("/pic/**").addResourceLocations("file:"+fileUploadPath);
+        registry.addResourceHandler("/slide/**").addResourceLocations("file:"+slideUploadPath);
         System.out.println("file:"+fileUploadPath);
+        System.out.println("file:"+slideUploadPath);
     }
 
     @Override

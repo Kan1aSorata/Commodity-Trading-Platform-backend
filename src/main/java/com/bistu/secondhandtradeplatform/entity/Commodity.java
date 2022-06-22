@@ -17,4 +17,5 @@ public class Commodity {
     private int stock;
     private int sales;
     private double score;
+    private int status;
 }

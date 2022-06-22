@@ -9,4 +9,5 @@ import java.util.Map;
 @Repository
 public interface UploadService {
     Map<String,Object> commodityPic(String sku, MultipartFile multipartFile, HttpServletRequest req);
+    Map<String,Object> slidePic(String index, MultipartFile multipartFile, HttpServletRequest req);
 }

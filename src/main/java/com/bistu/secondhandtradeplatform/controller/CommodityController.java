@@ -34,6 +34,10 @@ public class CommodityController {
         return commodityService.getSku(name);
     }
 
+    @GetMapping("/getCommoditySku")
+    public String getCommoditySku() {
+        return commodityService.getCommoditySku();
+    }
     /*
     sort:
         0:default

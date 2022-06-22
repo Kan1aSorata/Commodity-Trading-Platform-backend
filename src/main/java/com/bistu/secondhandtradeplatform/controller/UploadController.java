@@ -20,4 +20,9 @@ public class UploadController {
     public Map<String,Object> commodityPic(@RequestParam("sku") String sku, @RequestParam("file") MultipartFile multipartFile, HttpServletRequest req) {
         return uploadService.commodityPic(sku, multipartFile, req);
     }
+
+    @PostMapping("/slidePic")
+    public Map<String,Object> slidePic(@RequestParam("index") String index, @RequestParam("file") MultipartFile multipartFile, HttpServletRequest req) {
+        return uploadService.slidePic(index, multipartFile, req);
+    }
 }
