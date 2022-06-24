@@ -56,17 +56,20 @@ public class UserWalletServiceImpl implements UserWalletService {
     }
 
     @Override
-    public String consumeWallet(String userId, double money, double point) {
+    public String consumeWallet(String userId, double money) {
         UserWallet userWallet = userWalletMapper.selectById(userId);
-        if (userWallet.getBalance() - money < 0) {
-            return "您当前余额为" + userWallet.getBalance() + "不足以支付所需的" + point + "元";
+        int change = 0;
+        double cost = 0;
+        change = (int) (userWallet.getPoint() / 100);
+        cost = money - change;
+        if (userWallet.getBalance() - cost < 0) {
+            return "您当前余额为" + userWallet.getBalance() + "，去掉积分抵扣的" + change + "元，不足以支付所需的" + cost + "元";
         }
-        if (userWallet.getPoint() - point < 0) {
-            return "您当前积分为" + userWallet.getPoint() + "不足以支付所需的" + point + "点积分";
-        }
-        userWallet.setBalance(userWallet.getBalance() - money);
-        userWallet.setPoint(userWallet.getPoint() - point + money);
-        userTradeRecordService.addTradeRecord(userId, -money, -point);
+        System.out.println();
+        userWallet.setBalance(userWallet.getBalance() - cost);
+        userWallet.setPoint(userWallet.getPoint() - (change * 100) + cost);
+        System.out.println(userWallet);
+        userTradeRecordService.addTradeRecord(userId, -money, -(change * 100));
 
         if (userWalletMapper.updateById(userWallet) != 0) {
             return "success.";

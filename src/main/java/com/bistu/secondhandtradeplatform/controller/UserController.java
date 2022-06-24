@@ -1,11 +1,9 @@
 package com.bistu.secondhandtradeplatform.controller;
 
-import com.bistu.secondhandtradeplatform.entity.PurchaseHistory;
-import com.bistu.secondhandtradeplatform.entity.User;
-import com.bistu.secondhandtradeplatform.entity.UserTransition;
-import com.bistu.secondhandtradeplatform.entity.UserWallet;
+import com.bistu.secondhandtradeplatform.entity.*;
 import com.bistu.secondhandtradeplatform.mapper.UserMapper;
 import com.bistu.secondhandtradeplatform.service.PurchaseHistoryService;
+import com.bistu.secondhandtradeplatform.service.ShippingAddressService;
 import com.bistu.secondhandtradeplatform.service.UserService;
 import com.bistu.secondhandtradeplatform.service.UserWalletService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,8 @@ public class UserController {
     private PurchaseHistoryService purchaseHistoryService;
     @Autowired
     private UserWalletService userWalletService;
-
+    @Autowired
+    private ShippingAddressService shippingAddressService;
 
     /*
     用户注册
@@ -77,7 +76,7 @@ public class UserController {
     }
 
     /*
-        status: 已发货 - 1，待收货 - 2，运输中 - 3，已收货 - 4，交易完成 - 0
+        status: 已发货 - 1，待收货 - 2，运输中 - 3，已收货 - 4，退货中 - 5，交易完成 - 0
          */
     @GetMapping("/setPurchaseStatus")
     public String setPurchaseStatus(String userId, String sku, int status) {
@@ -105,9 +104,23 @@ public class UserController {
     }
 
     @GetMapping("/payment")
-    public String payment(String userId, double money, double point) {
-        return userWalletService.consumeWallet(userId, money, point);
+    public String payment(String userId, double money) {
+        return userWalletService.consumeWallet(userId, money);
     }
 
+    @GetMapping("/addAddress")
+    public String addAddress(String userId, String address) {
+        return shippingAddressService.addAddress(userId, address);
+    }
+
+    @GetMapping("/deleteAddress")
+    public String deleteAddress(String userId, String address) {
+        return shippingAddressService.deleteAddress(userId, address);
+    }
+
+    @GetMapping("/getAddress")
+    public List<ShippingAddress> getAddress(String userId) {
+        return shippingAddressService.getAddress(userId);
+    }
 
 }

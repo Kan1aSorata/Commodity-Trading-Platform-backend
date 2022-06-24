@@ -15,4 +15,5 @@ public interface CommodityService {
     List<Commodity> searchCommodityByName(String name, int sort);
     String getSku(String name);
     String getCommoditySku();
+    Commodity getCommodityBySku(String sku);
 }

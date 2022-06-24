@@ -37,6 +37,11 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
+    public Commodity getCommodityBySku(String sku) {
+        return commodityMapper.selectById(sku);
+    }
+
+    @Override
     public String deleteCommodityByName(String name) {
         queryWrapper.eq("name", name);
         if (commodityMapper.delete(queryWrapper) != 0) {

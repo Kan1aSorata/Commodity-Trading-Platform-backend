@@ -52,4 +52,9 @@ public class CommodityController {
     public List<Commodity> searchCommodityByName(String name, int sort) {
         return commodityService.searchCommodityByName(name, sort);
     }
+
+    @GetMapping("/getCommodityBySku")
+    public Commodity getCommodityBySku(String sku) {
+        return commodityService.getCommodityBySku(sku);
+    }
 }
