@@ -10,11 +10,11 @@ I'm new in Programming, so if you find any problem about this program, please fe
 
 ## Table od Contents
 
-- [Git clone](#Git Clone)
+- [Install](#install)
 - [Usage](#Usage)
 - [License](#license) 
 
-## Git Clone
+## Install
 
 ```sh
 git clone https://github.com/Kan1aSorata/Commodity-Trading-Platform-backend.git
