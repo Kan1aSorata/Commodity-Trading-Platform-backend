@@ -8,7 +8,7 @@ I'm new in Programming, so if you find any problem about this program, please fe
 
 
 
-## Table od Contents
+## Table of Contents
 
 - [Install](#install)
 - [Usage](#Usage)
