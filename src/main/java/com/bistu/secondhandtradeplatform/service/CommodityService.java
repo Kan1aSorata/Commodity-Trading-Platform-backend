@@ -7,8 +7,6 @@ import java.util.List;
 
 @Repository
 public interface CommodityService {
-
-
     List<Commodity> listAll();
     String addCommodity(Commodity commodity);
     String deleteCommodityByName(String name);
@@ -16,4 +14,6 @@ public interface CommodityService {
     String getSku(String name);
     String getCommoditySku();
     Commodity getCommodityBySku(String sku);
+    String setCommodityParams(String sku);
+    List<Commodity> searchCommodityByCategory(String category, int sort);
 }

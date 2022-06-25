@@ -14,7 +14,6 @@ public class ShippingAddressServiceImpl implements ShippingAddressService {
 
     @Autowired
     private ShippingAddressMapper shippingAddressMapper;
-    QueryWrapper<ShippingAddress> queryWrapper = new QueryWrapper<>();
 
     @Override
     public String addAddress(String userId, String address) {
@@ -28,16 +27,18 @@ public class ShippingAddressServiceImpl implements ShippingAddressService {
 
     @Override
     public String deleteAddress(String userId, String address) {
-        queryWrapper.eq("user_id", userId);
-        queryWrapper.eq("address", address);
-        if (shippingAddressMapper.delete(queryWrapper) != 0) {
+        QueryWrapper<ShippingAddress> query = new QueryWrapper<>();
+        query.eq("user_id", userId);
+        query.eq("address", address);
+        if (shippingAddressMapper.delete(query) != 0) {
             return "delete success.";
         } else return "failure";
     }
 
     @Override
     public List<ShippingAddress> getAddress(String userId) {
-        queryWrapper.eq("user_id", userId);
-        return shippingAddressMapper.selectList(queryWrapper);
+        QueryWrapper<ShippingAddress> query = new QueryWrapper<>();
+        query.eq("user_id", userId);
+        return shippingAddressMapper.selectList(query);
     }
 }

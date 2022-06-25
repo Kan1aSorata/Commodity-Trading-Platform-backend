@@ -13,6 +13,11 @@ public class PurchaseHistory {
     private String orderId;
     private String id;
     private String sku;
+    private int count;
+    private double price;
+    private double payment;
     private Date purchaseTime;
     private int status;
+    private String shop;
+    private String picture;
 }

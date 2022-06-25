@@ -45,9 +45,11 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public String deleteCart(String userId, String sku) {
-        queryWrapper.eq("user_id", userId);
-        queryWrapper.eq("commodity_sku", sku);
-        if (cartMapper.delete(queryWrapper) != 0) {
+        QueryWrapper<Cart> query = new QueryWrapper<>();
+        query.eq("user_id", userId);
+        query.eq("commodity_sku", sku);
+        System.out.println(userId + "and " + sku);
+        if (cartMapper.delete(query) != 0) {
             return "delete success.";
         } else return "failure.";
     }
@@ -55,6 +57,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public String deleteCartByName(String userId, String name) {
         String sku = commodityService.getSku(name);
+        System.out.println(sku);
         return deleteCart(userId, sku);
     }
 

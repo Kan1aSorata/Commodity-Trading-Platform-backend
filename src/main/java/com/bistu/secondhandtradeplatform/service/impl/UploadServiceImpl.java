@@ -40,7 +40,7 @@ public class UploadServiceImpl implements UploadService {
             //生成文件，folder为文件目录，newName为文件名
             multipartFile.transferTo(new File(folder, newName));
             //生成返回给前端的url
-            String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() +"/slide/"+ newName;
+            String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() +"/pic/"+ newName;
             System.out.println("url:"+url);
             //返回URL
             result.put("status", "success");
@@ -72,7 +72,7 @@ public class UploadServiceImpl implements UploadService {
             //生成文件，folder为文件目录，newName为文件名
             multipartFile.transferTo(new File(folder, newName));
             //生成返回给前端的url
-            String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() +"/pic/"+ newName;
+            String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() +"/slide/"+ newName;
             System.out.println("url:"+url);
             //返回URL
             result.put("status", "success");

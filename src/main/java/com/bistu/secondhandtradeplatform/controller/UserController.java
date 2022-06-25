@@ -2,13 +2,11 @@ package com.bistu.secondhandtradeplatform.controller;
 
 import com.bistu.secondhandtradeplatform.entity.*;
 import com.bistu.secondhandtradeplatform.mapper.UserMapper;
-import com.bistu.secondhandtradeplatform.service.PurchaseHistoryService;
-import com.bistu.secondhandtradeplatform.service.ShippingAddressService;
-import com.bistu.secondhandtradeplatform.service.UserService;
-import com.bistu.secondhandtradeplatform.service.UserWalletService;
+import com.bistu.secondhandtradeplatform.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.concurrent.TransferQueue;
 
 @RestController
 @RequestMapping("/users")
@@ -24,6 +22,8 @@ public class UserController {
     private UserWalletService userWalletService;
     @Autowired
     private ShippingAddressService shippingAddressService;
+    @Autowired
+    private UserTradeRecordService userTradeRecordService;
 
     /*
     用户注册
@@ -76,11 +76,25 @@ public class UserController {
     }
 
     /*
-        status: 已发货 - 1，待收货 - 2，运输中 - 3，已收货 - 4，退货中 - 5，交易完成 - 0
+     * 已废弃
+     *
+        status: 0等待审核 1已上架 2已下架
          */
     @GetMapping("/setPurchaseStatus")
     public String setPurchaseStatus(String userId, String sku, int status) {
         return purchaseHistoryService.setPurchaseStatus(userId, sku, status);
+    }
+    /*
+        1已下单 2已发货 3已完成 4退货中 5完成退货
+     */
+    @PostMapping("/insertHistory")
+    public String insertHistory(@RequestBody PurchaseHistory purchaseHistory) {
+        return purchaseHistoryService.insertHistory(purchaseHistory);
+    }
+
+    @GetMapping("/setHistoryStatus")
+    public String setHistoryStatus(String userId, String sku, int status) {
+        return purchaseHistoryService.setHistoryStatus(userId, sku, status);
     }
 
     @GetMapping("/purchaseHistory")
@@ -123,4 +137,8 @@ public class UserController {
         return shippingAddressService.getAddress(userId);
     }
 
+    @GetMapping("/getTradeRecord")
+    public List<UserTradeRecord> getTradeRecord(String userId) {
+        return userTradeRecordService.getTradeRecord(userId);
+    }
 }

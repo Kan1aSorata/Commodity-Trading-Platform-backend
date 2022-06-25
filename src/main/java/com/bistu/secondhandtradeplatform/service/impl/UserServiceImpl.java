@@ -27,7 +27,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserTransitionMapper userTransitionMapper;
 
-    QueryWrapper<User> queryWrapper = new QueryWrapper<>();
 
     @Override
     public String register(UserTransition userTransition) {

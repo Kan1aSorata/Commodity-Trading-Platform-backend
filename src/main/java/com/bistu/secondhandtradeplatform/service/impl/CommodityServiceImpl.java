@@ -41,6 +41,35 @@ public class CommodityServiceImpl implements CommodityService {
         return commodityMapper.selectById(sku);
     }
 
+//    TODO：更改商品状态
+    @Override
+    public String setCommodityParams(String sku) {
+//        Commodity commodity = commodityMapper.selectById(sku);
+//        commodity.
+        return null;
+    }
+
+    @Override
+    public List<Commodity> searchCommodityByCategory(String category, int sort) {
+        List<Commodity> commodityList = commodityMapper.selectList(null);
+        if (!Objects.equals(category, "")) {
+            QueryWrapper<Commodity> query = new QueryWrapper<>();
+            query.like("category", category);
+            commodityList = commodityMapper.selectList(query);
+        }
+        CommodityComparator commodityComparator = new CommodityComparator();
+        switch (sort) {
+            case 1: commodityList.sort(commodityComparator::compareByPriceHL);break;
+            case 2: commodityList.sort(commodityComparator::compareByPriceLH);break;
+            case 3: commodityList.sort(commodityComparator::compareByScoreHL);break;
+            case 4: commodityList.sort(commodityComparator::compareByScoreLH);break;
+            case 5: commodityList.sort(commodityComparator::compareBySalesHL);break;
+            case 6: commodityList.sort(commodityComparator::compareBySalesLH);break;
+            default:break;
+        }
+        return commodityList;
+    }
+
     @Override
     public String deleteCommodityByName(String name) {
         queryWrapper.eq("name", name);
@@ -63,8 +92,11 @@ public class CommodityServiceImpl implements CommodityService {
     public List<Commodity> searchCommodityByName(String name, int sort) {
         List<Commodity> commodityList = commodityMapper.selectList(null);
         if (!Objects.equals(name, "")) {
-            queryWrapper.eq("name", name);
-            commodityList = commodityMapper.selectList(queryWrapper);
+            System.out.println(name);
+            QueryWrapper<Commodity> query = new QueryWrapper<>();
+            query.like("name", name);
+            commodityList = commodityMapper.selectList(query);
+            System.out.println(commodityList);
         }
         CommodityComparator commodityComparator = new CommodityComparator();
         switch (sort) {

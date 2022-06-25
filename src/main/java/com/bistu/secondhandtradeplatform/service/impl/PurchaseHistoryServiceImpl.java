@@ -1,6 +1,7 @@
 package com.bistu.secondhandtradeplatform.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.bistu.secondhandtradeplatform.entity.Commodity;
 import com.bistu.secondhandtradeplatform.entity.PurchaseHistory;
 import com.bistu.secondhandtradeplatform.mapper.PurchaseHistoryMapper;
 import com.bistu.secondhandtradeplatform.service.PurchaseHistoryService;
@@ -34,8 +35,9 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
 
     @Override
     public List<PurchaseHistory> getPurchaseHistoryByUserId(String userId) {
-        queryWrapper.eq("id", userId);
-        return purchaseHistoryMapper.selectList(queryWrapper);
+        QueryWrapper<PurchaseHistory> query = new QueryWrapper<>();
+        query.eq("id", userId);
+        return purchaseHistoryMapper.selectList(query);
     }
 
     @Override
@@ -59,4 +61,48 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
             return "failure.";
         }
     }
+
+    @Override
+    public String insertHistory(PurchaseHistory purchaseHistory) {
+        purchaseHistory.setOrderId(UUID.randomUUID().toString().replace("-", "").toLowerCase());
+        purchaseHistory.setPurchaseTime(new Date());
+        if (purchaseHistoryMapper.insert(purchaseHistory) != 0) {
+            return "success.";
+        } return "failure.";
+
+    }
+
+    /*
+    此接口与其他接口功能冲突，请不要使用
+     */
+    @Override
+    public String setHistoryStatus(String userId, String sku, int status) {
+        QueryWrapper<PurchaseHistory> wrapper = new QueryWrapper<>();
+        wrapper.eq("id", userId).eq("sku", sku);
+        List<PurchaseHistory> purchaseHistory = purchaseHistoryMapper.selectList(wrapper);
+        purchaseHistory.forEach(item -> {
+            item.setStatus(status);
+            purchaseHistoryMapper.updateById(item);
+        });
+        return "success.";
+    }
+
+    @Override
+    public List<PurchaseHistory> getOrderList(String shop, int status) {
+        QueryWrapper<PurchaseHistory> query = new QueryWrapper<>();
+        query.eq("shop", shop).eq("status", status);
+        return purchaseHistoryMapper.selectList(query);
+    }
+
+    @Override
+    public String setOrderStatus(String orderId, int status) {
+        PurchaseHistory purchaseHistory =  purchaseHistoryMapper.selectById(orderId);
+        purchaseHistory.setStatus(status);
+        if (purchaseHistoryMapper.updateById(purchaseHistory) != 0) {
+            return "success.";
+        } else return "failure.";
+
+    }
+
+
 }
